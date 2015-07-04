@@ -1,32 +1,104 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <LinearLayout
+        android:id="@+id/extendedToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        android:background="?android:attr/colorPrimary"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="72dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="72dp">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
-        android:text="Start" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dexter"
+            android:textColor="#fff"
+            android:textSize="@dimen/font_display3" />
 
-    <Button
-        android:id="@+id/button2"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Some Tagline"
+            android:textColor="#fff"
+            android:textSize="@dimen/font_title" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
-        android:text="Stop" />
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/ic_play_arrow_white_24dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/extendedToolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom">
+
+            <View
+                android:id="@+id/jarFill"
+                android:layout_width="@dimen/jarFillWidth"
+                android:layout_height="0dp"
+                android:layout_marginLeft="35dp"
+                android:background="@color/green_light" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/jarFill"
+                android:gravity="center_vertical">
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="100dp"
+                    android:layout_height="3dp"
+                    android:background="@color/accent" />
+
+                <TextView
+                    android:id="@+id/fillInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="75%"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/font_display1" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/jar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_battery_outline_black_24dp"
+            android:tint="#9E9E9E" />
+
+    </FrameLayout>
 
 
 </RelativeLayout>

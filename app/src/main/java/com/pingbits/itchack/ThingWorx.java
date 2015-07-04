@@ -18,7 +18,8 @@ import java.io.UnsupportedEncodingException;
 
 public class ThingWorx {
 
-    public static final String SET_URL = "https://i3liot4.cloudapp.net:8443/Thingworx/Things/Jar/Services/setStart";
+    public static final String setStartUrl = "https://i3liot4.cloudapp.net:8443/Thingworx/Things/Jar/Services/setStart";
+    public static final String getStartUrl = "https://i3liot4.cloudapp.net:8443/Thingworx/Things/Jar/Services/setStart";
     private static final String tag = "ThingWorx";
 
 //    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
@@ -45,7 +46,7 @@ public class ThingWorx {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(context, SET_URL, entity, "application/json", new AsyncHttpResponseHandler() {
+        client.post(context, setStartUrl, entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i(tag, "SUCCESS!");
