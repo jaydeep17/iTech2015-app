@@ -32,7 +32,16 @@
             </intent-filter>
         </activity>
 
+
         <service android:name="com.parse.PushService" />
+        <receiver
+            android:name=".MyBroadCast"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="dexter.data"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
