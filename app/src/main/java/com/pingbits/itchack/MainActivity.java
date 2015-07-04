@@ -10,18 +10,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tv;
+    Button startBtn;
+    Button stopBtn;
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            float message = intent.getFloatExtra("message", -1);
+            Log.d("receiver", "Got message: " + message);
+            tv.setText(String.format("Jar content : %f%%", message));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.text);
+        startBtn = (Button) findViewById(R.id.button);
+        stopBtn = (Button) findViewById(R.id.button2);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setStart(true);
+            }
+        });
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setStart(false);
+            }
+        });
     }
 
     @Override
@@ -59,13 +86,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            int message = intent.getIntExtra("message", -1);
-            Log.d("receiver", "Got message: " + message);
-            tv.setText(String.format("Jar content : %d%%", message));
-        }
-    };
+    public void setStart(Boolean value) {
+        ThingWorx.setStartValue(this, value);
+    }
 }

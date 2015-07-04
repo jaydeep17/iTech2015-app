@@ -18,7 +18,7 @@ public class MyBroadCast extends BroadcastReceiver{
         sendMessage(context, pd.data);
     }
 
-    private void sendMessage(Context context, int value) {
+    private void sendMessage(Context context, float value) {
         Intent intent = new Intent("dexter.data");
         // You can also include some extra data.
         intent.putExtra("message", value);
