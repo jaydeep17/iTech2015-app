@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView fillInfo;
 
     private int fullHeight;
+    private int orderValue = -1;
 
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(Context context, Intent intent) {
             ThingWorx.getJarValue(MainActivity.this);
+            ThingWorx.getOrderValue(MainActivity.this);
         }
     };
 
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent("dexter.percnt");
                 LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
             }
-        }, 500, 500);
+        }, 750, 750);
     }
 
     @Override
@@ -138,11 +141,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setStart(!startValue);
     }
 
-    private void setJarFill(float percnt) {
+    public void setJarFill(float percnt) {
+        if (percnt < 0) {
+            return;
+        }
+        if (percnt > 100) {
+            percnt = 100;
+        }
         float height = fullHeight * percnt / 100;
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) jarFill.getLayoutParams();
         params.height = (int) height;
         jarFill.setLayoutParams(params);
         fillInfo.setText(String.format("%d%%", (int) percnt));
+    }
+
+    private void showOrderPlaced() {
+        Snackbar.make(findViewById(R.id.rootView), "Your order has been placed", Snackbar.LENGTH_LONG)
+                .setAction("CANCEL", this).show();
+    }
+
+    public void setOrder(int val) {
+        if (orderValue == -1) {
+            orderValue = val;
+        } else if (val > orderValue) {
+            showOrderPlaced();
+            orderValue = val;
+        }
     }
 }
