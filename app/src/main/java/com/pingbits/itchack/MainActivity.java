@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("receiver", "Got message: " + message);
         }
     };
+    private BroadcastReceiver tempReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ThingWorx.getJarValue(MainActivity.this);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fullHeight = getResources().getDimensionPixelSize(R.dimen.fullHeight);
 
         setJarFill(50);
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Intent intent = new Intent("dexter.percnt");
+                LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+            }
+        }, 500, 500);
     }
 
     @Override
@@ -89,12 +105,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("dexter.data"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(tempReceiver,
+                new IntentFilter("dexter.percnt"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(tempReceiver);
     }
 
     public void setStart(Boolean value) {
