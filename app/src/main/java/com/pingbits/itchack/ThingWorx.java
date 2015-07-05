@@ -102,4 +102,19 @@ public class ThingWorx {
             }
         });
     }
+
+    public static void addOrder() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post("http://172.16.1.32:3000/order", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.i(tag, "Order added!");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.e("tag", "error", error);
+            }
+        });
+    }
 }

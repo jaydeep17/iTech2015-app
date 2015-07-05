@@ -20,4 +20,8 @@
 
     <dimen name="fullHeight">400dp</dimen>
     <dimen name="jarFillWidth">200dp</dimen>
+
+
+    <dimen name="avatar_size">48dp</dimen>
+    <dimen name="list_view_double_line_height">72dp</dimen>
 </resources>

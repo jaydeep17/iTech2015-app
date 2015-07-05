@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.pingbits.greendao.Ordder;
+import com.pingbits.greendao.Order;
+
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,6 +102,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.orders) {
+            Intent intent = new Intent(this, OrderListActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -165,6 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             orderValue = val;
         } else if (val > orderValue) {
             showOrderPlaced();
+            Ordder order = new Ordder(null, "Sugar (5Kg)", new Date());
+            ((MyApplication) getApplicationContext()).getOrderDao().insert(order);
+            ThingWorx.addOrder();
             orderValue = val;
         }
     }
